@@ -1,35 +1,55 @@
 import audios from "./data.js";
-import { path } from "./utils.js";
+import { path, secondsToMinutes } from "./utils.js";
 import elements from "./playerElements.js";
 export default {
   audioData: audios,
   currentAudio: {},
   currentPlaying: 0, // Adicionando um Estado a aplicação, começando do estado 0
   isPlaying: false,
+  isMuted: false,
   start() {
     elements.get.call(this);
-    elements.actions.call(this);
 
     this.updateCardInfo();
-    // Quando finalizar o audio
-    this.audio.onended = () => this.nextSong();
   },
   play() {
     this.isPlaying = true;
     this.audio.play();
+    this.playPause.innerHTML = "pause";
   },
   pause() {
     this.isPlaying = false;
     this.audio.pause();
+    this.playPause.innerHTML = "play_arrow";
+  },
+  timeUpdate() {
+    this.currentDuration.innerHTML = secondsToMinutes(this.audio.currentTime);
+    this.seekbarPlay.value = this.audio.currentTime;
   },
   togglePlayPause() {
-    if ((this.isPlaying = false)) {
+    if (this.isPlaying) {
       this.pause();
     } else {
       this.play();
     }
   },
-
+  mute() {
+    this.isMuted = true;
+    this.audio.muted = true;
+    this.muteSong.innerHTML = "volume_off";
+  },
+  unmute() {
+    this.isMuted = false;
+    this.audio.muted = false;
+    this.muteSong.innerHTML = "volume_up";
+  },
+  toggleMute() {
+    if (this.isMuted) {
+      this.unmute();
+    } else {
+      this.mute();
+    }
+  },
   nextSong() {
     this.currentPlaying++;
 
@@ -40,6 +60,12 @@ export default {
     this.updateCardInfo();
     this.audio.play();
   },
+  setVolume(value) {
+    this.audio.volume = value / 100;
+  },
+  setSeekBar(value) {
+    this.audio.currentTime = value;
+  },
   updateCardInfo() {
     this.currentAudio = this.audioData[this.currentPlaying];
 
@@ -49,7 +75,12 @@ export default {
     this.title.innerHTML = `<i class="material-icons">audiotrack</i> ${this.currentAudio.title}`;
     this.artist.innerHTML = this.currentAudio.artist;
     elements.createAudioElement.call(this, path(this.currentAudio.file));
-    this.audio.src = path(this.currentAudio.file);
+
+    this.audio.onloadeddata = () => {
+      console.log(this.audio.duration);
+
+      elements.actions.call(this);
+    };
   },
   restart() {
     this.currentPlaying = 0;

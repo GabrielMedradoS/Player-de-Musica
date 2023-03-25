@@ -47,8 +47,9 @@ audio {
   background-color: #7159c1;
 }
 
-#vol-control {
+#muteSong {
   color: #7159c1;
+  transform: translateY(2px);
 }
 
 /* webkit para alteraçao no chrome *** 
