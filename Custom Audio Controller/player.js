@@ -22,10 +22,6 @@ export default {
     this.audio.pause();
     this.playPause.innerHTML = "play_arrow";
   },
-  timeUpdate() {
-    this.currentDuration.innerHTML = secondsToMinutes(this.audio.currentTime);
-    this.seekbarPlay.value = this.audio.currentTime;
-  },
   togglePlayPause() {
     if (this.isPlaying) {
       this.pause();
@@ -33,6 +29,12 @@ export default {
       this.play();
     }
   },
+
+  timeUpdate() {
+    this.currentDuration.innerHTML = secondsToMinutes(this.audio.currentTime);
+    this.seekbarPlay.value = this.audio.currentTime;
+  },
+
   mute() {
     this.isMuted = true;
     this.audio.muted = true;
@@ -50,6 +52,10 @@ export default {
       this.mute();
     }
   },
+  setVolume(value) {
+    this.audio.volume = value / 100;
+  },
+
   nextSong() {
     this.currentPlaying++;
 
@@ -60,12 +66,21 @@ export default {
     this.updateCardInfo();
     this.audio.play();
   },
-  setVolume(value) {
-    this.audio.volume = value / 100;
-  },
+  /*   prevSong() {
+    this.currentPlaying--;
+
+    if (this.currentPlaying <= 0) {
+      this.currentPlaying = this.audioData.length;
+      this.updateCardInfo();
+    }
+    this.updateCardInfo();
+    this.audio.play();
+  }, */
+
   setSeekBar(value) {
     this.audio.currentTime = value;
   },
+
   updateCardInfo() {
     this.currentAudio = this.audioData[this.currentPlaying];
 

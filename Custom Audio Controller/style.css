@@ -52,6 +52,11 @@ audio {
   transform: translateY(2px);
 }
 
+#navigate-before,
+#navigate-next {
+  background-color: #7159c1;
+}
+
 /* webkit para alteraçao no chrome *** 
 unica forma de alterar a cor do input */
 input[type="range"]::-webkit-slider-thumb {
