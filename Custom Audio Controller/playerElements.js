@@ -34,12 +34,12 @@ export default {
     this.audio.onended = () => this.nextSong();
     this.audio.ontimeupdate = () => this.timeUpdate();
 
-    Buttons.forEach((button) => {
+    Buttons.map((button) => {
       button.addEventListener("click", () => {
         switch (button) {
-          case this.playPause:
+          /*           case this.playPause:
             this.togglePlayPause();
-            break;
+            break; */
           /*           case this.navigateNext:
             this.nextSong();
             break;
@@ -64,6 +64,9 @@ export default {
         }
       });
     }); */
+    this.playPause.onclick = () => this.togglePlayPause();
+    this.navigateNext.onclick = () => this.nextSong();
+    this.navigateBefore.onclick = () => this.prevSong();
 
     this.seekbarVol.oninput = () => this.setVolume(this.seekbarVol.value);
     this.seekbarVol.onchange = () => this.setVolume(this.seekbarVol.value);

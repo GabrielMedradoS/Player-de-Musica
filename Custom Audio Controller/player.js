@@ -58,24 +58,24 @@ export default {
 
   nextSong() {
     this.currentPlaying++;
+    this.pause();
 
     if (this.currentPlaying == this.audioData.length) {
       this.restart();
     }
-
     this.updateCardInfo();
-    this.audio.play();
   },
-  /*   prevSong() {
+  prevSong() {
     this.currentPlaying--;
+    this.pause();
 
-    if (this.currentPlaying <= 0) {
-      this.currentPlaying = this.audioData.length;
+    if (this.currentPlaying < 0) {
+      this.currentPlaying = this.audioData.length - 1;
+
       this.updateCardInfo();
     }
     this.updateCardInfo();
-    this.audio.play();
-  }, */
+  },
 
   setSeekBar(value) {
     this.audio.currentTime = value;
